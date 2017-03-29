@@ -1,26 +1,31 @@
 #main{
+	padding-top: 4px;
 	background-color: rgb(250, 250, 250);
 }
-
-#icon{
-	width: 36px;
-	height: 36px;
-	text-align: center;
-
+#main:hover{
+  background: rgba(158,158,158,.2);
+  border-radius: 3px;
 }
-
+#icon-text{
+	text-align: center;
+	float: left;
+}
+#desc-text{
+	padding: 8px 0;
+	color: rgba(0, 0, 0, 1);
+	}
+#icon{
+	height: 36px;
+	width: 36px;
+	text-align: center;
+}
 #button-text{
 	font-size: 10px;
+	font-family: 'Lato', sans-serif;
+	color: rgba(0,0,0,1);
 }
 
 #report-button{
 	cursor: pointer;
-}
-
-#desc-text{
-	float: left;
-	padding: 8px 0;
-}
-div{
-	display: block;
+	text-decoration: none;
 }
