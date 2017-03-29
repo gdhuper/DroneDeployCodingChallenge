@@ -1,6 +1,6 @@
 var loadApp = function(){
 
-//creating element variables by element Id's
+//creating element variables by element Id's  
 var	main = document.getElementById("main");
 var	report_button = document.getElementById("report_button");
 var	button_text = document.getElementById("button_text");
@@ -13,23 +13,26 @@ report_button.addEventListener('click', loadApi);
 //Instantiates DroneDeploy API and gets object information
 function loadApi(){
 
-	console.log("calling testApi") //log message (remove later)
+	console.log("calling testApi") //log message (remove laterg)
 
 	//instantiating dronedeploy api
 	new DroneDeploy({version: 1}).then(function(api){
   	console.log('DroneDeploy Api: ', api);
 
   	api.Plans.getCurrentlyViewed().then(function(plan){
-  		console.log("Plan.then id", plan.id);
-  		printPlan(plan);
+  		var zoom =16;
+  		api.Tiles.get({planId: plan.id, layerName: 'ortho' || 'dem', zoom: zoom}).then(function(tileInformation)
+  		{
+  			console.log("tileInformation", tileInformation);
+  		});
+  		
 
   	});
-  	console.log("printing plan outside method call", JSON.stringify(tempPlan))
+  
   	api.Plans.getCurrentlyViewed().subscribe(function(plan){
   		console.log("Plan.subscribe", plan);
   	});
 });
-
 
 }
 
