@@ -10,11 +10,13 @@
 	text-align: center;
 	float: left;
 	margin-left: -4px;
+	color: rgba(87, 87, 87, 1);
+
 }
 #desc-text{
 	margin-top: 3px;
 	padding: 8px 0;
-	color: rgba(0, 0, 0, 1);
+	color: rgba(87, 87, 87, 1);
 	}
 #icon{
 	height: 36px;
