@@ -82,9 +82,7 @@ var loadApp = function() {
                         api.Messaging.showToast("Downloading PDF with zoom level = " + zoom, {
                             timeout: 1100
                         });
-                    
-
-                    	sendDataToServer(tiles);
+                    	sendDataToServer(tiles, plan.name); //method call to send img url to server to convert to base64
                 });
 
 
@@ -97,22 +95,23 @@ var loadApp = function() {
 
     }
 
+
   /*
    * Sends tile url data to heroku server and gets back UrlData for saving as PDF
    */
-    function sendDataToServer(tiles) {
+    function sendDataToServer(tiles, planName) {
     console.log("sending data to server", tiles); //Remove later
 
     //send tiles urls to heroku server and receives data URL of each image url from server
     jQuery.ajax({
         type: "POST",
-        url: "https://limitless-crag-83270.herokuapp.com/index.php", 
+        url: "https://salty-shore-17204.herokuapp.com/index.php", 
         data: {
             "tiles": tiles
         },
         success: function(dataURL) {
-
-            savePDF(dataURL); //call for saving map view
+        	console.log("response from server", dataURL);
+            savePDF(dataURL, planName); //call for saving map view with dataURL of image and plan name to print
 
         }
     })
@@ -121,31 +120,14 @@ var loadApp = function() {
 
 
 /*
- * instantiates jsPDF and saves the map images
+ * Instantiates jsPDF and saves the map image as PDF
  */
-function savePDF(dataURL) {
-	var i = new Image(); 
+function savePDF(dataURL, planName) {
 
-	i.onload = function(){
- 	alert( i.width+", "+i.height );
-	};
-
-	i.src = dataURL;
-
-
-    var doc = new jsPDF('p', 'mm');
-    doc.text("Construction site test", 5, 5);
-
-    doc.addImage(dataURL, "PNG", 0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height );
-    try {
-        doc.save("test.pdf");
-        console.log("pdf saved")
-    	} 
-    catch (err) {
-        console.log("pdf not saved!");
-        alert("not saved");
-    			  }	
-
+        var doc = new jsPDF('p', 'mm'); //instantiating jspdf
+        doc.text(planName, 80, 30); //prints plan name on top of map
+        doc.addImage(dataURL.trim(), "PNG", 10, 10, 150, 150); 
+        doc.save("mapview.pdf"); //saving image as pdf
 
 	}	
 
