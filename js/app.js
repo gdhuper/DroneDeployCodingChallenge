@@ -10,7 +10,7 @@ var	desc_text = document.getElementById("desc_text");
 //Adding event listener to button
 report_button.addEventListener('click', loadApi);
 
-/******Getting array of Tile ***********/
+/******Getting array of Tiles. Retrieved from drone deploy API documentation ***********/
 
 function getTilesFromGeometry(geometry, template, zoom){
   function long2tile(lon,zoom) {
@@ -67,7 +67,7 @@ function loadApi(){
   	console.log('DroneDeploy Api: ', api);
 
   	api.Plans.getCurrentlyViewed().then(function(plan){
-  		var zoom =17;
+  		var zoom = 16;
   		console.log("plan.then", plan)
   		api.Tiles.get({planId: plan.id, layerName: 'ortho' || 'dem', zoom: zoom}).then(function(tileInformation)
   		{
@@ -76,9 +76,12 @@ function loadApi(){
   			console.log("number of tiles: ",tiles.length)
   			for (x in tiles){
   			console.log("tile ", tiles[x]);
+  			api.Messaging.showToast("Downloading PDF with zoom level = " + zoom, {
+                    timeout: 1000
+                });
   		}
   			
-  		//createPDF(tiles);			
+  		createPDF(tiles);			
   		});
   		
 
@@ -93,13 +96,45 @@ function loadApi(){
 
 function createPDF(tiles)
 {
-	console.log("saving pdf", tiles)
-	var doc = new jsPDF('p');
+	console.log(" in saving pdf", tiles)
+	
+	const toDataURL = tiles => fetch(url)
+    .then(response => response.blob())
+    .then(blob => new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onloadend = () => resolve(reader.result)
+      reader.onerror = reject
+      reader.readAsDataURL(blob)
+    }))
 
-	doc.addImage(imgData, "PNG", 15, 40, 180, 160);
+  
+    console.log(fromResolve)
+
+  	/* var request = new XMLHttpRequest();
+      request.open('GET', tiles, true);
+      request.onreadystatechange = function() {
+        // Makes sure the document is ready to parse.
+        if(request.readyState == 4) {
+          // Makes sure it's found the file.
+          if(request.status == 200) {
+            savePDF(request.responseText);
+          }
+        }
+      };
+      request.send(null);*/
+
+}
+
+function savePDF(dataURL)
+{
+	console.log("in save PDF", dataURL)
+	
+	var doc = new jsPDF('p');
+	doc.addImage(dataURL, "PNG", 15, 40, 180, 160);
   	doc.save("test.pdf");
 
 }
+
 
 
 //Test method to check resolve call from promise (remove later)
