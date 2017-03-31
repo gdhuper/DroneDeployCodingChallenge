@@ -35,3 +35,7 @@ ___
   ---
 ###### This was a really fun project to work on and it pushed me to learn some new set of skills in a short amount of time.
 ######  I got to learn more about Dronedeploy app platform and I realized how the power of API's can be harnessed to create apps to suit one's needs
+
+![alt text](https://github.com/gdhuper/DroneDeployCodingChallenge/blob/master/img/workingshot.png "working screenshot")
+
+
