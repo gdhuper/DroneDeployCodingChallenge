@@ -1,11 +1,9 @@
 var loadApp = function() {
-
     //creating element variables by element Id's  
     var main = document.getElementById("main");
     var report_button = document.getElementById("report_button");
     var button_text = document.getElementById("button_text");
     var desc_text = document.getElementById("desc_text");
-
 
     //Adding event listener to button
     report_button.addEventListener('click', loadApi);
